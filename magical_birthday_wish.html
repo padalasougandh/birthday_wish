@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, Sana!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;700&display=swap');
+
+        /* General body styling */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to top, #ffecd2 0%, #fcb69f 100%);
+            overflow: hidden; /* Hide overflow to prevent scrollbars from animation */
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Confetti animation */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #ffd700;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            from { transform: translateY(-100vh) rotate(0deg); }
+            to { transform: translateY(100vh) rotate(720deg); }
+        }
+
+        /* Doraemon container */
+        .doraemon-container {
+            position: absolute;
+            bottom: -250px; /* Start off-screen */
+            left: 50%;
+            transform: translateX(-50%);
+            animation: walk-in 6s ease-out forwards, pause-and-talk 4s 6s forwards, walk-out 2s 10s forwards;
+            z-index: 10;
+        }
+
+        /* The walking animation */
+        @keyframes walk-in {
+            0% { bottom: -250px; transform: translateX(-50%) scale(0.8); }
+            100% { bottom: 20px; transform: translateX(-50%) scale(1); }
+        }
+        @keyframes pause-and-talk {
+            0% { bottom: 20px; }
+            100% { bottom: 20px; }
+        }
+        @keyframes walk-out {
+            0% { bottom: 20px; }
+            100% { bottom: -250px; } /* Move off-screen after the wish */
+        }
+
+        /* Doraemon's character CSS (enhanced) */
+        .doraemon {
+            width: 180px;
+            height: 200px;
+            background-color: #00a0e9;
+            border-radius: 50% 50% 20px 20px;
+            position: relative;
+            border: 6px solid #222;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            animation: pulse 1s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.02); }
+        }
+
+        .doraemon .head {
+            width: 150px;
+            height: 150px;
+            background-color: #fff;
+            border-radius: 50%;
+            border: 6px solid #222;
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Eyes and face details */
+        .doraemon .eyes { display: flex; gap: 20px; position: absolute; top: 35px; }
+        .doraemon .eye {
+            width: 30px; height: 40px; background-color: #fff; border-radius: 50%;
+            border: 4px solid #222; display: flex; justify-content: center; align-items: center;
+        }
+        .doraemon .pupil {
+            width: 12px; height: 12px; background-color: #222; border-radius: 50%;
+            animation: blink 2s infinite;
+        }
+        @keyframes blink { 0%, 50%, 100% { transform: scaleY(1); } 5% { transform: scaleY(0.1); } }
+        
+        .doraemon .nose {
+            width: 25px; height: 25px; background-color: #d90000; border-radius: 50%;
+            border: 4px solid #222; position: absolute; top: 70px; z-index: 1;
+            animation: bounce-nose 1s infinite alternate;
+        }
+        @keyframes bounce-nose { 0% { transform: translateY(0); } 100% { transform: translateY(2px); } }
+
+        .doraemon .mouth {
+            width: 100px; height: 60px; border: 6px solid #222;
+            border-top: none; border-left: none; border-right: none;
+            border-bottom-left-radius: 60px; border-bottom-right-radius: 60px;
+            position: absolute; top: 100px;
+        }
+
+        /* Mustache styling */
+        .doraemon .mustache {
+            position: absolute; width: 80px; height: 3px; background-color: #222;
+            top: 85px; transform-origin: 100% 50%;
+        }
+        .doraemon .mustache:nth-child(1) { left: -15px; transform: rotate(10deg); }
+        .doraemon .mustache:nth-child(2) { left: -15px; top: 95px; transform: rotate(0deg); }
+        .doraemon .mustache:nth-child(3) { left: -15px; top: 105px; transform: rotate(-10deg); }
+        .doraemon .mustache:nth-child(4) { right: -15px; transform: rotate(-10deg); }
+        .doraemon .mustache:nth-child(5) { right: -15px; top: 95px; transform: rotate(0deg); }
+        .doraemon .mustache:nth-child(6) { right: -15px; top: 105px; transform: rotate(10deg); }
+
+        /* The birthday message container */
+        .message-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            padding: 50px;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            border-radius: 25px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out, transform 0.5s ease-in-out;
+            max-width: 90%;
+            max-height: 80%;
+            overflow-y: auto;
+            border: 8px solid #ff69b4;
+            box-sizing: border-box;
+            z-index: 5;
+        }
+
+        .message-container.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .message-container h2 {
+            font-family: 'Pacifico', cursive;
+            color: #ff1493;
+            font-size: 4em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            animation: text-pop 1s ease-out;
+        }
+        @keyframes text-pop { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
+        .message-container p {
+            font-size: 1.6em;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            color: #555;
+            animation: fade-in 2s forwards;
+            animation-delay: 0.5s;
+            opacity: 0;
+        }
+
+        .quote {
+            font-style: italic;
+            color: #888;
+            margin-top: 30px;
+            font-size: 1.3em;
+            border-top: 2px solid #ccc;
+            padding-top: 20px;
+            animation: fade-in 2s forwards;
+            animation-delay: 1s;
+            opacity: 0;
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="confetti" style="animation-duration: 5s; animation-delay: 0s; left: 10%;"></div>
+    <div class="confetti" style="animation-duration: 7s; animation-delay: 1s; left: 30%;"></div>
+    <div class="confetti" style="animation-duration: 6s; animation-delay: 2s; left: 50%;"></div>
+    <div class="confetti" style="animation-duration: 4s; animation-delay: 3s; left: 70%;"></div>
+    <div class="confetti" style="animation-duration: 8s; animation-delay: 4s; left: 90%;"></div>
+
+    <div class="doraemon-container">
+        <div class="doraemon">
+            <div class="head">
+                <div class="eyes">
+                    <div class="eye"><div class="pupil"></div></div>
+                    <div class="eye"><div class="pupil"></div></div>
+                </div>
+                <div class="nose"></div>
+                <div class="mouth"></div>
+                <div class="mustache"></div>
+                <div class="mustache"></div>
+                <div class="mustache"></div>
+                <div class="mustache"></div>
+                <div class="mustache"></div>
+                <div class="mustache"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="message-container" id="birthdayMessage">
+        <h2 id="friendNameHeader"></h2>
+        <p id="wishText"></p>
+        <p class="quote" id="quoteText"></p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Hardcode the name and nickname
+            const friendName = "Sana";
+            const nickname = "Mini";
+
+            // Beautiful and special birthday quotes
+            const quotes = [
+                "The world is a better place with you in it. Happy Birthday to the one who adds so much sparkle to life.",
+                "May your birthday be a chapter filled with laughter, love, and beautiful memories. You deserve all the happiness in the world.",
+                "You are a rare and beautiful soul. On your special day, may you feel as cherished as you make everyone around you feel.",
+                "Every day I am grateful to have you in my life. You are a true gift, and I hope this day is as wonderful as you are.",
+                "Wishing you a day that's as magical and special as you are. May all your dreams and wishes come true."
+            ];
+
+            // Doraemon's fun and heartfelt birthday wishes
+            const wishes = [
+                "Hello, Mini! I traveled through time and space just to give you this special message! Happy Birthday!",
+                "With my Anywhere Door, I found all the happiness in the world and brought it here for you! Happy Birthday, Sana!",
+                "From my 4D Pocket to your special day, I'm sending you endless joy, laughter, and Dorayaki! Happy Birthday, Mini!",
+                "May your year be filled with adventures as exciting as a trip to the future! Happy Birthday!",
+                "I've used my Time Machine to confirm: the future holds amazing things for you, Sana! Wishing you a super-duper Happy Birthday!"
+            ];
+
+            // Select a random wish and quote
+            const randomWish = wishes[Math.floor(Math.random() * wishes.length)];
+            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+
+            // Get elements from the DOM
+            const messageContainer = document.getElementById('birthdayMessage');
+            const nameHeader = document.getElementById('friendNameHeader');
+            const wishTextElement = document.getElementById('wishText');
+            const quoteTextElement = document.getElementById('quoteText');
+            const doraemonContainer = document.querySelector('.doraemon-container');
+
+            // Set the friend's name in the header
+            nameHeader.textContent = `Happy Birthday, Sana! 🎉`;
+
+            // Wait for Doraemon to walk in and pause before showing the message
+            doraemonContainer.addEventListener('animationend', (event) => {
+                if (event.animationName === 'pause-and-talk') {
+                    // Update the message and quote
+                    wishTextElement.textContent = randomWish;
+                    quoteTextElement.textContent = randomQuote;
+                    
+                    // Show the message box with a magical effect
+                    messageContainer.classList.add('show');
+                }
+            });
+
+            // Trigger the animations by setting their play state
+            doraemonContainer.style.animationPlayState = 'running';
+        });
+    </script>
+</body>
+</html>
